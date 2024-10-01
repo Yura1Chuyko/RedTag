@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_Formula__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(
+    Stage__c,
+    &apos;Initialization&apos;, &apos;🔍 Initialization&apos;,
+    &apos;Preparation&apos;, &apos;🛠 Preparation&apos;,
+    &apos;In Progress&apos;, &apos;📄 In Progress&apos;,
+    &apos;On Hold&apos;, &apos;🎉 On Hold&apos;,
+    &apos;⚙️ Completed&apos;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Stage</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
