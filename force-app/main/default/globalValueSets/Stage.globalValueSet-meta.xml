@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Initialization</fullName>
+        <default>false</default>
+        <label>Initialization</label>
+    </customValue>
+    <customValue>
+        <fullName>Preparation</fullName>
+        <default>false</default>
+        <label>Preparation</label>
+    </customValue>
+    <customValue>
+        <fullName>In Progress</fullName>
+        <default>false</default>
+        <label>In Progress</label>
+    </customValue>
+    <customValue>
+        <fullName>On Hold</fullName>
+        <default>false</default>
+        <label>On Hold</label>
+    </customValue>
+    <customValue>
+        <fullName>Completed</fullName>
+        <default>false</default>
+        <label>Completed</label>
+    </customValue>
+    <masterLabel>Stage</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

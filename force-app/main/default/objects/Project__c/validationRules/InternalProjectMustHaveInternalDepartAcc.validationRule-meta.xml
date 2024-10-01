@@ -3,8 +3,7 @@
     <fullName>InternalProjectMustHaveInternalDepartAcc</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-    RecordType.DeveloperName = &apos;Internal_Project&apos;,     
-    NOT(ISBLANK(Client__c)),                     
+    RecordType.DeveloperName = &apos;Internal_Project&apos;,                         
     NOT(ISPICKVAL(Client__r.Type, &apos;Internal Department&apos;)) 
 )</errorConditionFormula>
     <errorDisplayField>Client__c</errorDisplayField>
