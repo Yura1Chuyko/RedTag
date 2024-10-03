@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Internal queue</name>
+    <queueMembers>
+        <users>
+            <user>yurachuiko2003@gmail.com</user>
+            <user>yurii.chuiko55@gmail.com</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Project__c</sobjectType>
+    </queueSobject>
+</Queue>
