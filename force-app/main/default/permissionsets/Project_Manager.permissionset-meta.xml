@@ -254,4 +254,8 @@
         <object>Task_Template__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditTask</name>
+    </userPermissions>
 </PermissionSet>

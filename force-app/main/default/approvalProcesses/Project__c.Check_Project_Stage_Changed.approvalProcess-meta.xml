@@ -14,8 +14,12 @@
     <entryCriteria>
         <criteriaItems>
             <field>Project__c.Stage__c</field>
-            <operation>contains</operation>
-            <value>Initialization,Preparation,In Progress,On Hold,Completed</value>
+            <operation>notEqual</operation>
+            <value>Initialization</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Project__c.Stage__c</field>
+            <operation>notEqual</operation>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalRecordLock>true</finalApprovalRecordLock>
