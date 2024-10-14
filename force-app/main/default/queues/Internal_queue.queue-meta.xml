@@ -11,4 +11,7 @@
     <queueSobject>
         <sobjectType>Project__c</sobjectType>
     </queueSobject>
+    <queueSobject>
+        <sobjectType>Task</sobjectType>
+    </queueSobject>
 </Queue>

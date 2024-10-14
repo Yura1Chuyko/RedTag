@@ -2,7 +2,7 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Client_queue_Project</fullName>
     <filterScope>Queue</filterScope>
-    <label>Client queue</label>
+    <label>Q</label>
     <queue>Client_queue</queue>
     <sharedTo>
         <allInternalUsers></allInternalUsers>

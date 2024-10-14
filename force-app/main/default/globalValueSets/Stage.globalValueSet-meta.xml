@@ -2,7 +2,7 @@
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
         <fullName>Initialization</fullName>
-        <default>false</default>
+        <default>true</default>
         <label>Initialization</label>
     </customValue>
     <customValue>
