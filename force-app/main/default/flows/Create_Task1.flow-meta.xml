@@ -511,7 +511,7 @@
             <targetReference>Choose_Task_Creation_Type</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>currentProjectRecordTypeId</name>
         <dataType>String</dataType>

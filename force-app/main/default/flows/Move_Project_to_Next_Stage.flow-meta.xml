@@ -513,7 +513,7 @@
             <targetReference>ProceedToTheNextStage</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>nextStage</name>
         <dataType>String</dataType>
