@@ -19,27 +19,19 @@
         
     }
         
-        // Utility method to create a test Project record.
-        private static Project__c createTestProject(Date dueDate, String initialStage) {
-            Account client = [SELECT Id,Type FROM Account LIMIT 1];
-            Project__c project = new Project__c(Name = 'Test Project', Due_Date__c = dueDate, Stage__c = initialStage, Client__c = client.Id);
-            insert project;
-            return project;
-        }
-        
         @isTest
         static void testProjectStageOnHold() {
-            Project__c pastDueProject = createTestProject(Date.today().addDays(-5), 'In Progress');
-            Project__c futureDueProject = createTestProject(Date.today().addDays(5), 'In Progress');
+            Project__c pastDueProject = TestDataFactory.createTestProjectForStage(Date.today().addDays(-5), 'In Progress');
+            Project__c futureDueProject = TestDataFactory.createTestProjectForStage(Date.today().addDays(5), 'In Progress');
             
             List<Project__c> projects = new List<Project__c>{ pastDueProject, futureDueProject };
             
             Test.startTest();
+            Database.executeBatch(new ProjectStageBatch());
             ProjectUtils.projectStageOnHold(projects);
-            Test.stopTest();
             
-            pastDueProject = [SELECT Stage__c FROM Project__c WHERE Id = :pastDueProject.Id];
-            futureDueProject = [SELECT Stage__c FROM Project__c WHERE Id = :futureDueProject.Id];
+            Test.stopTest();
+            System.debug(pastDueProject);
             
             System.assertEquals('On Hold', pastDueProject.Stage__c, 'The project with a past due date should be On Hold.');
             
@@ -71,6 +63,7 @@
             GroupMember queueMember = [SELECT UserOrGroupId FROM GroupMember WHERE GroupId = :internalQueue.Id AND UserOrGroupId = :projectManager.Id];
             
         Test.startTest();
+        Database.executeBatch(new ProjectSendEmailBatch());
         ProjectUtils.sendOverdueProjectsEmail(overdueProjects);
         Integer invocations = Limits.getEmailInvocations();
         Test.stopTest();

@@ -2,39 +2,37 @@ public with sharing class TaskTriggerHelper {
     // Update Spent Budget when a task is closed
     public static void updateSpentBudgetOnClose(List<Task> newTasks, Map<Id, Task> oldTaskMap) {
         
-        List<Project__c> projectsToUpdate = new List<Project__c>();
         Set<Id> projectIds = new Set<Id>();
-        for (Task newTask :newTasks) {
+        Map<Id, Decimal> projectBudgetUpdates = new Map<Id, Decimal>();
+    
+        for (Task newTask : newTasks) {
             Task oldTask = oldTaskMap.get(newTask.Id);
             if (newTask.Status == 'Completed' && oldTask.Status != 'Completed' && newTask.WhatId != null) {
                 projectIds.add(newTask.WhatId);
-            }
-        }
-        if (!projectIds.isEmpty()) {
-            List<Project__c> queriedProjects = [SELECT Id, Spent_Budget__c FROM Project__c WHERE Id IN :projectIds];
-        
-            for (Project__c project : queriedProjects) {
-                for (Task newTask : newTasks) {
-                    Task oldTask = oldTaskMap.get(newTask.Id);
-                    if (project.Spent_Budget__c == null) {
-                        project.Spent_Budget__c = 0;
-                    }
-                    if (newTask.Status == 'Completed' && oldTask.Status != 'Completed' && newTask.WhatId == project.Id && newTask.Cost_Of_Activity__c != null) {
-                        project.Spent_Budget__c += newTask.Cost_Of_Activity__c;
-                    }
+    
+                Decimal budgetIncrease = (newTask.Cost_Of_Activity__c != null) ? newTask.Cost_Of_Activity__c : 0;
+                if (projectBudgetUpdates.containsKey(newTask.WhatId)) {
+                    projectBudgetUpdates.put(newTask.WhatId, projectBudgetUpdates.get(newTask.WhatId) + budgetIncrease);
+                } else {
+                    projectBudgetUpdates.put(newTask.WhatId, budgetIncrease);
                 }
-                projectsToUpdate.add(project);
             }
         }
-
-        if (!projectsToUpdate.isEmpty()) {
+    
+            List<Project__c> projectsToUpdate = [SELECT Id, Spent_Budget__c FROM Project__c WHERE Id IN :projectIds];
+            
+            for (Project__c project : projectsToUpdate) {
+                project.Spent_Budget__c = (project.Spent_Budget__c != null ? project.Spent_Budget__c : 0) + projectBudgetUpdates.get(project.Id);
+            }
+    
             try {
+                if (!projectIds.isEmpty()) {
                 update projectsToUpdate;
                 System.debug('Projects updated with new spent budget.');
+                }
             } catch (DmlException e) {
                 System.debug('Error updating spent budget on projects: ' + e.getMessage());
             }
-        }
     }
 
     // Validate before insert: Check if task creation exceeds budget
@@ -73,6 +71,13 @@ public with sharing class TaskTriggerHelper {
     // Return budget when a task is deleted
     public static void returnBudgetOnDelete(List<Task> oldTasks) { 
         Id profileSystemAdministrator = [SELECT Id FROM Profile WHERE PermissionsAuthorApex = true LIMIT 1].Id;
+
+        if(UserInfo.getProfileId() != profileSystemAdministrator) {
+            for(Task task : oldTasks) {
+                task.addError('Only System Administrator can delete tasks!');
+            }
+        }
+
         if (UserInfo.getProfileId() == profileSystemAdministrator ) {
             Set<Id> projectIds = new Set<Id>();
             for (Task oldTask : oldTasks) {

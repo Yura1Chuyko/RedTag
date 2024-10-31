@@ -52,18 +52,20 @@ public with sharing class ProjectTriggerHelper {
             }
             
         }
-
+    
+        // Insert tasks if any were created
         if (!tasksToCreate.isEmpty()) {
             try {
                 insert tasksToCreate;
                 System.debug('Tasks Created Successfully');
-            } catch(DmlException e) {
+            } catch (DmlException e) {
                 System.debug('Error creating tasks from templates: ' + e.getMessage());
             }
         } else {
             System.debug('No tasks to create.');
         }
     }
+    
     
     public static void sendBudgetExceedEmails(List<Project__c> newProjects, Map<Id, Project__c> oldProjectsMap) {
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();

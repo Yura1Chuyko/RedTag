@@ -14,8 +14,6 @@ public class CaseBatch implements Database.Batchable<SObject> {
             c.Status = 'Batch Processed'; 
         }
         update scope;
-        
-        AsyncClass.callQueueable(caseIds);
     }
     
     public void finish(Database.BatchableContext bc) {

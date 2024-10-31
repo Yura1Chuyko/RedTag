@@ -18,25 +18,13 @@ public with sharing class TaskTriggerHelperTest {
         insert projectManager;
         
     }
-    private static Project__c createTestProject(Decimal budget, Decimal spentBudget) {
-        Account client = [SELECT Id,Type FROM Account LIMIT 1];
-        Project__c project = new Project__c(Name = 'Test Project', Budget__c = budget, Spent_Budget__c = spentBudget,Client__c = client.Id);
-        insert project;
-        return project;
-    }
-    
-    // Utility method to create a test Task record.
-    private static Task createTestTask(Id projectId, String status, Decimal costOfActivity) {
-        Task task = new Task(WhatId = projectId, Status = status, Cost_Of_Activity__c = costOfActivity, Subject = 'Test Task');
-        insert task;
-        return task;
-    }
+ 
     @isTest
     static void testUpdateSpentBudgetOnClose() {
-        Project__c project = createTestProject(1000, 100);
+        Project__c project = TestDataFactory.createTestProjectForSpentBudget(1000, 100);
         
         // Create a task related to the project with an open status.
-        Task task = createTestTask(project.Id, 'Not Started', 50);
+        Task task = TestDataFactory.createTestTask(project.Id, 'Not Started', 50);
 
         task.Status = 'Completed';
         Test.startTest();
@@ -74,7 +62,7 @@ public with sharing class TaskTriggerHelperTest {
         Test.startTest();
         try {
             insert task;
-            System.assert(true, 'Task creation should have thrown an exception due to exceeding the budget.');
+            System.assert(true, 'Cannot create this task as it will exceed the allowed budget.');
         } catch (DmlException e) {
             System.debug('Caught DML Exception: ' + e.getMessage());
             System.assert(e.getMessage().contains('Cannot create this task as it will exceed the allowed budget.'),
@@ -86,9 +74,9 @@ public with sharing class TaskTriggerHelperTest {
 
     @isTest
     static void testReturnBudgetOnDelete() {
-        Project__c project = createTestProject(1000, 300);
+        Project__c project = TestDataFactory.createTestProjectForSpentBudget(1000, 300);
         
-        Task task = createTestTask(project.Id, 'Completed', 50);
+        Task task = TestDataFactory.createTestTask(project.Id, 'Completed', 50);
         
         Test.startTest();
         delete task;
@@ -101,17 +89,16 @@ public with sharing class TaskTriggerHelperTest {
     }
     @isTest
     static void testReturnBudgetOnDeleteWithNoPermission() {
-        Project__c project = createTestProject(1000, 300);
+        Project__c project = TestDataFactory.createTestProjectForSpentBudget(1000, 300);
         
-        Task task = createTestTask(project.Id, 'Completed', 50);
-
         // Simulate a user without the required profile.
         User user = [SELECT Id FROM User WHERE Profile.Name != 'System Administrator' LIMIT 1];
+        Task task = TestDataFactory.createTestTaskForUser(project.Id, 'Not Started', 50,  user.Id);
         System.runAs(user) {
             Test.startTest();
             try {
                 delete task;
-                System.assert(false, 'Delete operation should fail for users without the System Administrator profile.');
+                System.assert(false, 'Only System Administrator can delete tasks!');
             } catch (DmlException e) {
                 // Expected behavior: task deletion should fail for non-admin users.
                 System.assert(true, 'Delete operation failed as expected for non-admin user.');
