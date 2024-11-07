@@ -18,17 +18,19 @@
                 value={selectedCurrencyCode}
                 onchange={handleCurrencyCodeChange}>
             </lightning-combobox>
+            <div class = "slds-button_margin">
             <!-- Convert Button -->
             <lightning-button 
             label="Convert" 
             onclick={handleConvert} 
             variant="brand">
             </lightning-button>
-            
+            </div>
+            <div class = "converted-value">
             <template if:true={convertedValue}>
-                <p>Converted Value: {convertedValue}</p>
+                <p>Converted Value in {selectedCurrencyCode}: {convertedValue}</p>
             </template>
-
+        </div>
   
         </div>
     </lightning-card>

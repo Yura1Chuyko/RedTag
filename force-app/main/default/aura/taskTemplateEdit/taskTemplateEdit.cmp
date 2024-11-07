@@ -1,4 +1,4 @@
-<aura:component controller="TaskTemplateEditController" implements="force:hasRecordId,flexipage:availableForRecordHome,force:lightningQuickAction,force:hasSObjectName" access="global">
+<aura:component controller="TaskTemplateEditController" implements="force:hasRecordId,flexipage:availableForRecordHome, force:hasSObjectName, force:lightningQuickActionWithoutHeader"  access="global">
     <aura:attribute name="recordId" type="Id"/>
     <aura:attribute name="fields" type="String[]"/>
     

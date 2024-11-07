@@ -1,0 +1,10 @@
+/* Add some margin to the Convert button */
+.slds-button_margin {
+    margin-top: 15px;
+}
+
+/* Add margin to the converted value display */
+.converted-value {
+    margin-top: 15px;
+    font-size: 1.5em;
+}

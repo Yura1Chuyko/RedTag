@@ -1,4 +1,3 @@
-
 public class ProjectRenderAsPdfController {
     public Project__c project { get; private set; }
     public List<Task> relatedTasks { get; private set; }

@@ -12,7 +12,7 @@
     </apex:pageBlock>
     
     <apex:pageBlock title="Related Tasks">
-        <!--Display Related Task Fields -->
+        <!-- Display Related Task Fields -->
         <apex:pageBlockTable value="{!relatedTasks}" var="task">
             <apex:repeat value="{!$ObjectType.Task.fieldSets.PDF_TaskFields}" var="field">
                 <apex:column value="{!task[field.fieldPath]}" headerValue="{!field.label}" />
