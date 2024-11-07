@@ -16,4 +16,3 @@ global class ProjectSendEmailBatch implements Database.Batchable<SObject> {
         System.debug('Monthly overdue projects email batch job completed.');
     }
 }
-    

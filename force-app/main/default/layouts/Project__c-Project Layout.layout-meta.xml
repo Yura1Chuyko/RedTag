@@ -46,6 +46,10 @@
                 <behavior>Readonly</behavior>
                 <field>Stage_Formula__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Remaining_Budget__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

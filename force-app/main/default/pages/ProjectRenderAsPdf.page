@@ -1,0 +1,22 @@
+<apex:page renderAs="pdf" standardController="Project__c" extensions="ProjectRenderAsPdfController">
+    <apex:pageBlock title="Project Details">
+        <!-- Display Project Fields -->
+        <table>
+            <apex:repeat value="{!$ObjectType.Project__c.fieldSets.PDF_ProjectFields}" var="field">
+                <tr>
+                    <td><b>{!field.label}:</b></td>
+                    <td>{!projectFields[field.fieldPath]}</td>
+                </tr>
+            </apex:repeat>
+        </table>
+    </apex:pageBlock>
+    
+    <apex:pageBlock title="Related Tasks">
+        <!--Display Related Task Fields -->
+        <apex:pageBlockTable value="{!relatedTasks}" var="task">
+            <apex:repeat value="{!$ObjectType.Task.fieldSets.PDF_TaskFields}" var="field">
+                <apex:column value="{!task[field.fieldPath]}" headerValue="{!field.label}" />
+            </apex:repeat>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>

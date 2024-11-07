@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title = "Tasks Grouped By Stage">
+    <lightning-accordion allow-multiple-sections-open="true">
+        <template for:each={stagesWithTasks} for:item="stageItem">
+            <lightning-accordion-section name={stageItem.stage} label={stageItem.stage} key={stageItem.stage}>
+                <c-task-datatable tasks={stageItem.tasks}></c-task-datatable>
+            </lightning-accordion-section>
+        </template>
+    </lightning-accordion>
+    </lightning-card>
+</template>

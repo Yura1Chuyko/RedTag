@@ -1,3 +1,21 @@
-<aura:component>
+<aura:component controller="TaskTemplateEditController" implements="force:hasRecordId,flexipage:availableForRecordHome,force:lightningQuickAction,force:hasSObjectName" access="global">
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="fields" type="String[]"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:recordEditForm
+        aura:id="recordEditForm"
+        recordId="{!v.recordId}"
+        objectApiName="Task_Template__c"
+        onsuccess="{!c.handleSuccess}"
+        onerror="{!c.handleError}"
+    >
+        <aura:iteration items="{!v.fields}" var="fieldName">
+            <lightning:inputField fieldName="{!fieldName}"/>
+        </aura:iteration>
 
+        <lightning:button variant="brand" type="submit" label="Save"/>
+        <lightning:button variant="neutral" label="Cancel" onclick="{!c.handleCancel}"/>
+    </lightning:recordEditForm>
 </aura:component>

@@ -1,4 +1,4 @@
-    @isTest
+@isTest
     public class ProjectUtilsTest {
         @testSetup
     static void setupTestData() {
@@ -82,4 +82,3 @@
         System.assertEquals(0, invocations, 'An email shouldn`t be sent');
     }
 }
-    

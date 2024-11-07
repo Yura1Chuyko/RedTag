@@ -1,4 +1,4 @@
-    public with sharing class ProjectUtils {
+public with sharing class ProjectUtils {
         public static void projectStageOnHold(List<Project__c> projects) {
             List<Project__c> updateStageProjects = new List<Project__c>();
             for (Project__c project : projects) {

@@ -1,0 +1,35 @@
+<template>
+    <lightning-card title="Currency Converter" icon-name="utility:currency">
+        <div class="slds-m-around_medium">
+            <!-- Currency Field Combobox -->
+            <lightning-combobox
+                label="Currency Field"
+                placeholder="Select a Currency Field"
+                options={currencyFields}
+                value={selectedCurrencyField}
+                onchange={handleFieldChange}>
+            </lightning-combobox>
+
+            <!-- Currency Combobox -->
+            <lightning-combobox
+                label="Select Currency "
+                placeholder="Select a Currency"
+                options={picklistValues}
+                value={selectedCurrencyCode}
+                onchange={handleCurrencyCodeChange}>
+            </lightning-combobox>
+            <!-- Convert Button -->
+            <lightning-button 
+            label="Convert" 
+            onclick={handleConvert} 
+            variant="brand">
+            </lightning-button>
+            
+            <template if:true={convertedValue}>
+                <p>Converted Value: {convertedValue}</p>
+            </template>
+
+  
+        </div>
+    </lightning-card>
+</template>
